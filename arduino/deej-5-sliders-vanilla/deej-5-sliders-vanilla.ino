@@ -70,10 +70,9 @@ void loop() {
   // printSliderValues(); // For debug
   if (currTime - startTime >= sleepAfter) {
     display.clearDisplay();
-    startTime = currTime;
-  } else {
     display.display();
-  }
+    startTime = currTime;
+  } 
   delay(10);
 }
 
@@ -81,9 +80,10 @@ void updateSliderValues() {
   for (int i = 0; i < NUM_SLIDERS; i++) {
     analogSliderValues[i] = analogRead(analogInputs[i]);
 
-    if (analogSliderValues[i] > displayVolume[i] + 30 || analogSliderValues[i] < displayVolume[i] - 30) {
+    if (analogSliderValues[i] > displayVolume[i] + 10 || analogSliderValues[i] < displayVolume[i] - 10) {
       displayVolume[i] = analogSliderValues[i];
       displayVol();
+      display.display();
       startTime = currTime;
     }
 
@@ -117,8 +117,8 @@ void displayVol() {
   display.drawLine(98, 63, 127, 63, SSD1306_WHITE);
 
   display.fillRect(7, map(displayVolume[0], 0, 1023, 62, 21), 19, 62 ,  SSD1306_WHITE);
-  display.fillRect(39, map(displayVolume[1], 0, 1023, 62, map(displayVolume[0], 0, 1023, 62, 21)), 19, 62,  SSD1306_WHITE);
-  display.fillRect(71, map(displayVolume[2], 0, 1023, 62, map(displayVolume[0], 0, 1023, 62, 21)), 19, 62,  SSD1306_WHITE);
+  display.fillRect(39, map(displayVolume[2], 0, 1023, 62, map(displayVolume[0], 0, 1023, 62, 21)), 19, 62,  SSD1306_WHITE);
+  display.fillRect(71, map(displayVolume[1], 0, 1023, 62, map(displayVolume[0], 0, 1023, 62, 21)), 19, 62,  SSD1306_WHITE);
   display.fillRect(103, map(displayVolume[3], 0, 1023, 62, map(displayVolume[0], 0, 1023, 62, 21)), 19, 62,  SSD1306_WHITE);
 
   //display.display();
